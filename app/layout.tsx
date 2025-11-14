@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import { ThemeProvider } from "next-themes";
 import "./globals.css";
+import Image from "next/image";
+import localFont from "next/font/local";
+import clouds from '../public/clouds.png';
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -27,14 +29,26 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.className} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <main className="min-h-screen flex flex-col items-center relative">
+          {/* Background Image */}
+          <div className="absolute inset-0 -z-10">
+            <Image
+              alt="Clouds background"
+              src={clouds}
+              placeholder="blur"
+              quality={100}
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: "cover",
+              }}
+              priority
+            />
+          </div>
+
+          {/* Content */}
           {children}
-        </ThemeProvider>
+        </main>
       </body>
     </html>
   );
